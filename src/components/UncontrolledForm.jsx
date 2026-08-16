@@ -1,14 +1,23 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function UncontrolledForm() {
     const inputRef = useRef(null);
+    const [message, setMessage] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        alert(`Hello, ${inputRef.current.value}!`);
+        const value = inputRef.current.value.trim();
+
+        if (!value) {
+            setMessage("Please enter your name.");
+            return;
+        }
+
+        setMessage(`Hello, ${value}!`);
 
         inputRef.current.value = "";
+        inputRef.current.focus();
     };
 
     return (
@@ -24,6 +33,8 @@ function UncontrolledForm() {
 
                 <button type="submit">Submit</button>
             </form>
+
+            {message && <p className="success-message">{message}</p>}
         </div>
     );
 }

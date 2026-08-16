@@ -2,10 +2,17 @@ import { useState } from "react";
 
 function ControlledForm() {
     const [name, setName] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`Hello, ${name}!`);
+
+        if (!name.trim()) {
+            setMessage("Please enter your name.");
+            return;
+        }
+
+        setMessage(`Hello, ${name}!`);
         setName("");
     };
 
@@ -25,6 +32,8 @@ function ControlledForm() {
             </form>
 
             <p>Current value: {name}</p>
+
+            {message && <p className="success-message">{message}</p>}
         </div>
     );
 }
